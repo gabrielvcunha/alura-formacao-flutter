@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(
-      Column(
-        children: <Widget>[
-          Text(
-            "Bem vindo ao Bytebank",
-            textDirection: TextDirection.ltr,
+      MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(title: Text("Transferencias")),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
           ),
-          Text(
-            "Bem vindo ao Bytebank",
-            textDirection: TextDirection.ltr,
-          ),
-          Column(
-            children: <Widget>[
-              Text(
-                "Bem vindo ao Bytebank",
-                textDirection: TextDirection.ltr,
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
