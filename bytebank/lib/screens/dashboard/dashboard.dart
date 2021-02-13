@@ -10,19 +10,22 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text(_tituloAppBar)),
-        body: ListView(children: <Widget>[
-          Align(
-            alignment: Alignment.topCenter,
-            child: SaldoCard(),
-          ),
-          Consumer<Saldo>(
-            builder: (context, saldo, child) => RaisedButton(
+        body: ListView(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.topCenter,
+              child: SaldoCard(),
+            ),
+            RaisedButton(
               child: Text("Receber depósito"),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioDeposito()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FormularioDeposito()));
               },
             ),
-          )
-        ]),
+          ],
+        ),
       );
 }

@@ -1,5 +1,7 @@
 import 'package:bytebank/components/editor.dart';
+import 'package:bytebank/models/saldo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 const _tituloAppBar = "Receber Deposito";
 const _rotuloCampoValor = "Valor";
@@ -24,7 +26,7 @@ class FormularioDeposito extends StatelessWidget {
               RaisedButton(
                 child: Text(_textoBotaoConfirmar),
                 onPressed: () {
-                  Navigator.pop(context, _criaDeposito());
+                  _criaDeposito(context);
                 },
               ),
             ],
@@ -32,7 +34,17 @@ class FormularioDeposito extends StatelessWidget {
         ),
       );
 
-  void _criaDeposito() {
+  void _criaDeposito(context) {
+    final double valor = double.tryParse(_controladorCampoValor.text);
+    if (_validaDeposito(valor)) {
+      _atualizaEstado(context, valor);
+      Navigator.pop(context);
+    }
+  }
 
+  bool _validaDeposito(valor) => valor != null;
+
+  void _atualizaEstado(context, valor) {
+    Provider.of<Saldo>(context, listen: false).adiciona(valor);
   }
 }
