@@ -18,7 +18,7 @@ class Dashboard extends StatelessWidget {
             builder: (context, saldo, child) => RaisedButton(
               child: Text("Adiciona"),
               onPressed: () {
-                saldo.adiciona(10);
+                saldo.subtrai(10);
               },
             ),
           )
