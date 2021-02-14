@@ -14,20 +14,41 @@ class UltimasTransferencias extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Consumer<Transferencias>(
-              builder: (context, transferencias, child) {
-                return ListView.builder(
-                  padding: EdgeInsets.all(8),
-                  itemCount: 2,
-                  shrinkWrap: true,
-                  itemBuilder: (context, indice) => ItemTransferencia(transferencias.transferencias[indice]),
-                );
-              }),
+          Consumer<Transferencias>(builder: (context, transferencias, child) {
+            int _quantidadeTransferencias =
+                transferencias.transferencias.length;
+
+            if (_quantidadeTransferencias == 0)
+              return SemTransferenciasCadastradas();
+
+            return ListView.builder(
+              padding: EdgeInsets.all(8),
+              itemCount:
+                  _quantidadeTransferencias < 2 ? _quantidadeTransferencias : 2,
+              shrinkWrap: true,
+              itemBuilder: (context, indice) => ItemTransferencia(
+                  transferencias.transferencias.reversed.toList()[indice]),
+            );
+          }),
           RaisedButton(
-            child: Text("Transferências"),
+            child: Text("Ver todas as transferências"),
             onPressed: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ListaTransferencias())),
           ),
         ],
+      );
+}
+
+class SemTransferenciasCadastradas extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Card(
+        margin: EdgeInsets.all(35),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Text(
+            "Voce ainda nao cadastrou nenhuma transferencia",
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
 }
