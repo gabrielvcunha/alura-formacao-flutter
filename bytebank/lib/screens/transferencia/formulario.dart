@@ -49,7 +49,7 @@ class FormularioTransferencia extends StatelessWidget {
     final int numeroConta = int.tryParse(_controladorCampoNumeroConta.text);
     final double valor = double.tryParse(_controladorCampoValor.text);
 
-    if (_validaTransferencia(numeroConta, valor)) {
+    if (_validaTransferencia(context, numeroConta, valor)) {
       final novaTransferencia = Transferencia(valor, numeroConta);
       _atualizaEstado(context, novaTransferencia, valor);
       Navigator.pop(context);
@@ -57,7 +57,11 @@ class FormularioTransferencia extends StatelessWidget {
     return null;
   }
 
-  bool _validaTransferencia(numeroConta, valor) => numeroConta != null && valor != null;
+  bool _validaTransferencia(context, numeroConta, valor) {
+    final _camposPreenchidos = numeroConta != null && valor != null;
+    final _saldoSuficiente = valor <= Provider.of<Saldo>(context, listen: false).valor;
+    return _camposPreenchidos && _saldoSuficiente;
+  }
 
   void _atualizaEstado(context, novaTransferencia, valor) {
     Provider.of<Transferencias>(context, listen: false).adiciona(novaTransferencia);
