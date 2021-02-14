@@ -7,16 +7,27 @@ class ContactsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text("Contacts")),
-        body: FutureBuilder(
-          future: findAll(),
+        body: FutureBuilder<List<Contact>>(
+          initialData: [],
+          future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
           builder: (context, snapshot) {
-            final List<Contact> contacts = snapshot.data;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                final Contact contact = contacts[index];
-                return _ContactItem(contact);
-              },
-              itemCount: contacts.length,
+              final List<Contact> contacts = snapshot.data;
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final Contact contact = contacts[index];
+                  return _ContactItem(contact);
+                },
+                itemCount: contacts.length,
+              );
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Text("Loading"),
+                ],
+              ),
             );
           },
         ),
