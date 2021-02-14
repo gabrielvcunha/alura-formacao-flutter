@@ -7,8 +7,24 @@ void main() {
 class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(title: Text("Dashboard")),
-    ),
-  );
+        home: Scaffold(
+          appBar: AppBar(title: Text("Dashboard")),
+          body: Column(
+            children: <Widget>[
+              Image.asset("images/bytebank_logo.png"),
+              Container(
+                height: 120,
+                width: 120,
+                color: Colors.green,
+                child: Column(
+                  children: <Widget>[
+                    Icon(Icons.people),
+                    Text("Contacts"),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      );
 }
