@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(BytebankApp());
-  findAll().then((transactions) => print("Transaction: $transactions"));
+  findAll().then((transactions) => print("Transactions: $transactions"));
 }
 
 class BytebankApp extends StatelessWidget {
