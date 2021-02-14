@@ -38,13 +38,7 @@ class Dashboard extends StatelessWidget {
                 ),
               ],
             ),
-            RaisedButton(
-              child: Text("Transferências"),
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ListaTransferencias())),
-            ),
+            UltimasTransferencias(),
           ],
         ),
       );
