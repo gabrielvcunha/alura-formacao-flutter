@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:bytebank/http/webclient.dart';
-import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:http/http.dart';
 
@@ -14,58 +13,30 @@ class TransactionWebClient {
     List<Transaction> transactions = _toTransactions(response);
     return transactions;
   }
-  
+
   Future<Transaction> save(Transaction transaction) async {
-    Map<String, dynamic> transactionMap = _toMap(transaction);
-    final String transactionJson = jsonEncode(transactionMap);
+    final String transactionJson = jsonEncode(transaction.toJson());
 
     final Response response = await client.post(
         "http://192.168.0.5:8080/transactions",
         headers: {"Content-type": "application/json", "password": "1000"},
-        body: transactionJson
-    );
+        body: transactionJson);
 
     return _toTransaction(response);
   }
 
   List<Transaction> _toTransactions(Response response) {
     final List<dynamic> decodedJson = jsonDecode(response.body);
-
     final List<Transaction> transactions = [];
-    for (Map<String, dynamic> element in decodedJson) {
-      transactions.add(Transaction(
-        element['value'],
-        Contact(
-          0,
-          element['contact']['name'],
-          element['contact']['accountNumber'],
-        ),
-      ));
+    for (Map<String, dynamic> transactionJson in decodedJson) {
+      transactions.add(Transaction.fromJson(transactionJson));
     }
     return transactions;
   }
 
   Transaction _toTransaction(Response response) {
     Map<String, dynamic> json = jsonDecode(response.body);
-
-    return Transaction(
-      json['value'],
-      Contact(
-        0,
-        json['contact']['name'],
-        json['contact']['accountNumber'],
-      ),
-    );
+    return Transaction.fromJson(json);
   }
-
-  Map<String, dynamic> _toMap(Transaction transaction) {
-    final Map<String, dynamic> transactionMap = {
-      "value": transaction.value,
-      "contact": {
-        "name": transaction.contact.name,
-        "accountNumber": transaction.contact.accountNumber
-      }
-    };
-    return transactionMap;
-  }
+  
 }
