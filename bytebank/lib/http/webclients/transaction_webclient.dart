@@ -22,6 +22,11 @@ class TransactionWebClient {
         headers: {"Content-type": "application/json", "password": password},
         body: transactionJson);
 
+    if (response.statusCode == 400)
+      throw Exception("There was an error on submitting the transaction");
+    if (response.statusCode == 401)
+      throw Exception("Authentication failed");
+
     return Transaction.fromJson(jsonDecode(response.body));
   }
 
