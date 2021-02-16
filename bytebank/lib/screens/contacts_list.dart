@@ -6,19 +6,21 @@ import 'package:bytebank/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatefulWidget {
+  final ContactDAO contactDAO;
+
+  ContactsList({@required this.contactDAO});
+
   @override
   _ContactsListState createState() => _ContactsListState();
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final ContactDAO _dao = ContactDAO();
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text("Contacts")),
         body: FutureBuilder<List<Contact>>(
           initialData: [],
-          future: _dao.findAll(),
+          future: widget.contactDAO.findAll(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
