@@ -6,32 +6,39 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: Text("Dashboard")),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset("images/bytebank_logo.png"),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: <FeatureItem>[
-                  FeatureItem(
-                    "Transfer",
-                    Icons.monetization_on,
-                    onClick: () => _showContactsList(context),
+        body: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset("images/bytebank_logo.png"),
                   ),
-                  FeatureItem(
-                    "Transaction Feed",
-                    Icons.description,
-                    onClick: () => _showTransactionsList(context),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: <FeatureItem>[
+                        FeatureItem(
+                          "Transfer",
+                          Icons.monetization_on,
+                          onClick: () => _showContactsList(context),
+                        ),
+                        FeatureItem(
+                          "Transaction Feed",
+                          Icons.description,
+                          onClick: () => _showTransactionsList(context),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
       );
 
