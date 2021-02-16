@@ -5,40 +5,44 @@ import 'package:flutter_test/flutter_test.dart';
 import 'matchers.dart';
 
 void main() {
-  testWidgets(
-    "Should display bank logo when dashboard is open",
-    (tester) async {
-      await tester.pumpWidget(MaterialApp(home: Dashboard()));
-      final mainImage = find.byType(Image);
-      expect(mainImage, findsOneWidget);
-    },
-  );
+  group('When Dashboard is opened', () {
+    testWidgets(
+      "Should display bank logo",
+          (tester) async {
+        await tester.pumpWidget(MaterialApp(home: Dashboard()));
+        final mainImage = find.byType(Image);
+        expect(mainImage, findsOneWidget);
+      },
+    );
 
-  testWidgets(
-    "Should display the transfer feature when dashboard is open",
-    (tester) async {
-      await tester.pumpWidget(MaterialApp(home: Dashboard()));
+    testWidgets(
+      "Should display the transfer feature",
+          (tester) async {
+        await tester.pumpWidget(MaterialApp(home: Dashboard()));
 
-      final transferFeatureItem = find.byWidgetPredicate(
-        (widget) =>
-            featureItemMatcher(widget, "Transfer", Icons.monetization_on),
-      );
+        final transferFeatureItem = find.byWidgetPredicate(
+              (widget) =>
+              featureItemMatcher(widget, "Transfer", Icons.monetization_on),
+        );
 
-      expect(transferFeatureItem, findsOneWidget);
-    },
-  );
+        expect(transferFeatureItem, findsOneWidget);
+      },
+    );
 
-  testWidgets(
-    "Should display the transaction feed feature when dashboard is open",
-    (tester) async {
-      await tester.pumpWidget(MaterialApp(home: Dashboard()));
+    testWidgets(
+      "Should display the transaction feed feature",
+          (tester) async {
+        await tester.pumpWidget(MaterialApp(home: Dashboard()));
 
-      final transferFeatureItem = find.byWidgetPredicate(
-            (widget) =>
-            featureItemMatcher(widget, "Transaction Feed", Icons.description),
-      );
+        final transferFeatureItem = find.byWidgetPredicate(
+              (widget) =>
+              featureItemMatcher(widget, "Transaction Feed", Icons.description),
+        );
 
-      expect(transferFeatureItem, findsOneWidget);
-    },
-  );
+        expect(transferFeatureItem, findsOneWidget);
+      },
+    );
+  });
+
+
 }
