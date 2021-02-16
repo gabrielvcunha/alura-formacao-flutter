@@ -5,7 +5,7 @@ class Transaction {
   final double value;
   final Contact contact;
 
-  Transaction(this.id, this.value, this.contact);
+  Transaction(this.id, this.value, this.contact) : assert(value > 0);
 
   @override
   String toString() {
@@ -17,8 +17,7 @@ class Transaction {
         value = json['value'],
         contact = Contact.fromJson(json['contact']);
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'value': value,
         'contact': contact.toJson(),
