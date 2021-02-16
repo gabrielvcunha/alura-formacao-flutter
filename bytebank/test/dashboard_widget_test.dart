@@ -16,11 +16,34 @@ void main() {
     "Should display the transfer feature when dashboard is open",
     (tester) async {
       await tester.pumpWidget(MaterialApp(home: Dashboard()));
-      final transferFeature = find.widgetWithIcon(
-        FeatureItem,
-        Icons.monetization_on,
+
+      final transferFeatureItem = find.byWidgetPredicate(
+        (widget) =>
+            featureItemMatcher(widget, "Transfer", Icons.monetization_on),
       );
-      expect(transferFeature, findsOneWidget);
+
+      expect(transferFeatureItem, findsOneWidget);
     },
   );
+
+  testWidgets(
+    "Should display the transaction feed feature when dashboard is open",
+    (tester) async {
+      await tester.pumpWidget(MaterialApp(home: Dashboard()));
+
+      final transferFeatureItem = find.byWidgetPredicate(
+            (widget) =>
+            featureItemMatcher(widget, "Transaction Feed", Icons.description),
+      );
+
+      expect(transferFeatureItem, findsOneWidget);
+    },
+  );
+}
+
+bool featureItemMatcher(Widget widget, String name, IconData icon) {
+  if (widget is FeatureItem) {
+    return widget.name == name && widget.icon == icon;
+  }
+  return false;
 }
