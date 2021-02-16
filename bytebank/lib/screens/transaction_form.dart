@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
@@ -91,16 +93,22 @@ class _TransactionFormState extends State<TransactionForm> {
     String password,
     BuildContext context,
   ) async {
-    final Transaction transaction =
-        await _webClient.save(transactionCreated, password).catchError(
-      (error) {
-        showDialog(
-          context: context,
-          builder: (contextDialog) => FailureDialog(error.message),
+    final Transaction transaction = await _webClient
+        .save(transactionCreated, password)
+        .catchError(
+          (error) => showDialog(
+            context: context,
+            builder: (contextDialog) => FailureDialog(error.message),
+          ),
+          test: (error) => error is HttpException,
+        )
+        .catchError(
+          (error) => showDialog(
+            context: context,
+            builder: (contextDialog) => FailureDialog("Timeout"),
+          ),
+          test: (error) => error is TimeoutException,
         );
-      },
-      test: (error) => error is Exception,
-    );
 
     if (transaction != null) {
       await showDialog(
