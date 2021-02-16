@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'matchers.dart';
-import 'mocks.dart';
+import '../mocks/mocks.dart';
+import 'actions.dart';
 
 void main() {
   testWidgets(
@@ -22,11 +22,7 @@ void main() {
       final dashboard = find.byType(Dashboard);
       expect(dashboard, findsOneWidget);
 
-      final transferFeatureItem = find.byWidgetPredicate((widget) =>
-          featureItemMatcher(widget, "Transfer", Icons.monetization_on));
-      expect(transferFeatureItem, findsOneWidget);
-
-      await tester.tap(transferFeatureItem);
+      await clickOnTransferFeatureItem(tester);
       await tester.pumpAndSettle();
 
       final contactsList = find.byType(ContactsList);
