@@ -13,11 +13,14 @@ void main() {
   );
 
   testWidgets(
-    "Should display the first feature when dashboard is open",
+    "Should display the transfer feature when dashboard is open",
     (tester) async {
       await tester.pumpWidget(MaterialApp(home: Dashboard()));
-      final firstFeature = find.byType(FeatureItem);
-      expect(firstFeature, findsWidgets);
+      final transferFeature = find.widgetWithIcon(
+        FeatureItem,
+        Icons.monetization_on,
+      );
+      expect(transferFeature, findsOneWidget);
     },
   );
 }
