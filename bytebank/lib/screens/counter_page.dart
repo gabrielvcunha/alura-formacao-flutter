@@ -24,7 +24,7 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: Text("Contador")),
+      appBar: AppBar(title: Text("Counter")),
       body: Center(
         child: BlocBuilder<CounterCubit, int>(
             builder: (context, state) => Text("$state", style: textTheme.headline2)),
