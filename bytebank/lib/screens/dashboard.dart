@@ -1,46 +1,69 @@
 import 'package:bytebank/screens/contacts_list.dart';
+import 'package:bytebank/screens/name.dart';
 import 'package:bytebank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Dashboard extends StatelessWidget {
+class DashboardContainer extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text("Dashboard")),
-        body: LayoutBuilder(
-          builder: (context, constraints) => SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset("images/bytebank_logo.png"),
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => NameCubit("Gabriel"),
+      child: DashboardView(),
+    );
+  }
+}
+
+class DashboardView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: BlocBuilder<NameCubit, String>(
+          builder: (context, state) => Text("Welcome $state"),
+        ),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset("images/bytebank_logo.png"),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <FeatureItem>[
+                      FeatureItem(
+                        "Transfer",
+                        Icons.monetization_on,
+                        onClick: () => _showContactsList(context),
+                      ),
+                      FeatureItem(
+                        "Transaction Feed",
+                        Icons.description,
+                        onClick: () => _showTransactionsList(context),
+                      ),
+                      FeatureItem(
+                        "Change name",
+                        Icons.person_outline,
+                        onClick: () => _showChangeName(context),
+                      ),
+                    ],
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: <FeatureItem>[
-                        FeatureItem(
-                          "Transfer",
-                          Icons.monetization_on,
-                          onClick: () => _showContactsList(context),
-                        ),
-                        FeatureItem(
-                          "Transaction Feed",
-                          Icons.description,
-                          onClick: () => _showTransactionsList(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   void _showContactsList(context) {
     Navigator.of(context).push(
@@ -51,6 +74,16 @@ class Dashboard extends StatelessWidget {
   void _showTransactionsList(context) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => TransactionsList()),
+    );
+  }
+
+  void _showChangeName(blocBontext) {
+    Navigator.of(blocBontext).push(
+      MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+                value: BlocProvider.of<NameCubit>(blocBontext),
+                child: NameContainer(),
+              )),
     );
   }
 }

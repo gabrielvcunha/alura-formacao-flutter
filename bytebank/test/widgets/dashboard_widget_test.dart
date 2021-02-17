@@ -9,7 +9,7 @@ void main() {
     testWidgets(
       "Should display bank logo",
           (tester) async {
-        await tester.pumpWidget(MaterialApp(home: Dashboard()));
+        await tester.pumpWidget(MaterialApp(home: DashboardContainer()));
         final mainImage = find.byType(Image);
         expect(mainImage, findsOneWidget);
       },
@@ -18,7 +18,7 @@ void main() {
     testWidgets(
       "Should display the transfer feature",
           (tester) async {
-        await tester.pumpWidget(MaterialApp(home: Dashboard()));
+        await tester.pumpWidget(MaterialApp(home: DashboardContainer()));
 
         final transferFeatureItem = find.byWidgetPredicate(
               (widget) =>
@@ -32,7 +32,7 @@ void main() {
     testWidgets(
       "Should display the transaction feed feature",
           (tester) async {
-        await tester.pumpWidget(MaterialApp(home: Dashboard()));
+        await tester.pumpWidget(MaterialApp(home: DashboardContainer()));
 
         final transferFeatureItem = find.byWidgetPredicate(
               (widget) =>

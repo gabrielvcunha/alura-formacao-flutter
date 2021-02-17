@@ -26,7 +26,7 @@ void main() {
         contactDAO: mockContactDao,
       ));
 
-      final dashboard = find.byType(Dashboard);
+      final dashboard = find.byType(DashboardView);
       expect(dashboard, findsOneWidget);
 
       when(mockContactDao.findAll()).thenAnswer((realInvocation) async {

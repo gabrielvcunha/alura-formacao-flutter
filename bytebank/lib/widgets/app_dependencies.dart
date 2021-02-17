@@ -18,6 +18,6 @@ class AppDependencies extends InheritedWidget {
   @override
   bool updateShouldNotify(covariant AppDependencies oldWidget) {
     return contactDAO != oldWidget.contactDAO ||
-        contactDAO != oldWidget.transactionWebClient;
+        transactionWebClient != oldWidget.transactionWebClient;
   }
 }
