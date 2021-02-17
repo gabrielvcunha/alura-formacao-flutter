@@ -16,6 +16,7 @@ class _TransactionAuthDialogState extends State<TransactionAuthDialog> {
   Widget build(BuildContext context) => AlertDialog(
         title: Text("Authenticate"),
         content: TextField(
+          key: Key("transactionAuthDialogTextFieldPassword"),
           controller: _passwordController,
           obscureText: true,
           maxLength: 4,

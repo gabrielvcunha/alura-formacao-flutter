@@ -1,6 +1,8 @@
+import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/main.dart';
 import 'package:bytebank/models/contact.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/screens/contacts_list.dart';
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:bytebank/screens/transaction_form.dart';
@@ -68,9 +70,9 @@ void main() {
         },
       );
       expect(textFieldValue, findsOneWidget);
-      
+
       await tester.enterText(textFieldValue, "200");
-      
+
       final transferButton = find.widgetWithText(RaisedButton, "Transfer");
       expect(transferButton, findsOneWidget);
 
@@ -79,6 +81,38 @@ void main() {
 
       final transactionAuthDialog = find.byType(TransactionAuthDialog);
       expect(transactionAuthDialog, findsOneWidget);
+
+      final textFieldPassword =
+          find.byKey(Key("transactionAuthDialogTextFieldPassword"));
+      expect(textFieldPassword, findsOneWidget);
+
+      await tester.enterText(textFieldPassword, "1000");
+
+      final cancelButton = find.widgetWithText(FlatButton, "Cancel");
+      expect(cancelButton, findsOneWidget);
+
+      final confirmButton = find.widgetWithText(FlatButton, "Confirm");
+      expect(confirmButton, findsOneWidget);
+
+      when(mockTransactionWebClient.save(
+              Transaction(null, 200, Contact(null, "Gabriel", 1000)), "1000"))
+          .thenAnswer((_) async =>
+              Transaction(null, 200, Contact(null, "Gabriel", 1000)));
+
+      await tester.tap(confirmButton);
+      await tester.pumpAndSettle();
+
+      final successDialog = find.byType(SuccessDialog);
+      expect(successDialog, findsOneWidget);
+      
+      final okButton = find.widgetWithText(FlatButton, "Ok");
+      expect(okButton, findsOneWidget);
+
+      await tester.tap(okButton);
+      await tester.pumpAndSettle();
+      
+      final contactsListsBack = find.byType(ContactsList);
+      expect(contactsListsBack, findsOneWidget);
     },
   );
 }
