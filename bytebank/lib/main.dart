@@ -4,6 +4,8 @@ import 'package:bytebank/screens/dashboard.dart';
 import 'package:bytebank/widgets/app_dependencies.dart';
 import 'package:flutter/material.dart';
 
+import 'components/theme.dart';
+
 void main() {
   runApp(BytebankApp(
     contactDAO: ContactDAO(),
@@ -25,14 +27,7 @@ class BytebankApp extends StatelessWidget {
         contactDAO: contactDAO,
         transactionWebClient: transactionWebClient,
         child: MaterialApp(
-          theme: ThemeData(
-            primaryColor: Colors.green[900],
-            accentColor: Colors.blueAccent[700],
-            buttonTheme: ButtonThemeData(
-              buttonColor: Colors.blueAccent[700],
-              textTheme: ButtonTextTheme.primary,
-            ),
-          ),
+          theme: byteBankTheme,
           home: Dashboard(),
         ),
       );
